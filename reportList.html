@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Report Status Viewer</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        .grid-item {
+            border-bottom: 2px solid #ddd;
+            padding: 10px;
+        }
+        .grid-header {
+            font-weight: bold;
+            padding: 10px;
+            background-color: #f9f9f9;
+            border-bottom: 2px solid #ddd;
+        }
+    </style>
+<script>
+    async function fetchSubmissions() {
+      const response = await fetch('/.netlify/functions/get-submissions');
+      const data = await response.json();
+      return data.data.map(submission => submission.data);
+    }
+  
+    window.onload = async function() {
+      const reports = await fetchSubmissions();
+      const gridContainer = document.querySelector(".grid");
+  
+      reports.forEach(report => {
+        const dateDiv = document.createElement("div");
+        dateDiv.classList.add("grid-item");
+        dateDiv.textContent = report.data.date;
+        gridContainer.appendChild(dateDiv);
+  
+        const statusDiv = document.createElement("div");
+        statusDiv.classList.add("grid-item");
+        statusDiv.textContent = '처리 중'; // 예시로 '처리 중' 상태를 설정했습니다.
+        gridContainer.appendChild(statusDiv);
+      });
+    }
+  </script>
+</head>
+<body class="bg-white text-gray-800">
+<div class="container mx-auto px-4 py-8">
+    <h1 class="text-xl font-bold mb-4">신고 조회</h1>
+    <div class="grid grid-cols-2 gap-4">
+        <div class="grid-header">날짜</div>
+        <div class="grid-header">진행 상태</div>
+    </div>
+
+    <div class="flex justify-center mt-8">
+        <button class="mx-2 px-4 py-2 bg-gray-300 text-gray-800 rounded">1</button>
+        <button class="mx-2 px-4 py-2 bg-gray-300 text-gray-800 rounded">2</button>
+        <button class="mx-2 px-4 py-2 bg-gray-300 text-gray-800 rounded">3</button>
+        <button class="mx-2 px-4 py-2 bg-gray-300 text-gray-800 rounded">4</button>
+        <button class="mx-2 px-4 py-2 bg-gray-300 text-gray-800 rounded">5</button>
+    </div>
+</div>
+</body>
+</html>

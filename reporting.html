@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ReportingPage</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f9fafb;
+        }
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .input-field {
+            margin-bottom: 20px;
+        }
+        .input-label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        .input, .textarea {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #d1d5db;
+            border-radius: 4px;
+        }
+        .button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            color: #ffffff;
+            cursor: pointer;
+        }
+        .submit-button {
+            background-color: #4caf50;
+        }
+        .cancel-button {
+            background-color: #f44336;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-xl font-bold text-center mb-4">신고하기!</h1>
+        
+        <form name="report" netlify netlify-honeypot="bot-field" hidden>
+            <input type="text" name="date">
+            <input type="text" name="location">
+            <textarea name="content"></textarea>
+        </form>
+
+        <form onsubmit="handleSubmit(event)">
+            <div class="input-field">
+                <label class="input-label">사진</label>
+                <input type="file" id="file" class="input" accept="image/*">
+                <small>이미지를 업로드해주세요!</small>
+            </div>
+            <div class="input-field">
+                <label class="input-label">목격시간</label>
+                <input type="text" id="date" class="input" placeholder="예)2024-05-16">
+            </div>
+            <div class="input-field">
+                <label class="input-label">목격장소</label>
+                <input type="text" id="location" class="input" placeholder="장소를 입력해주세요">
+            </div>
+            <div class="input-field">
+                <label class="input-label">추가내용</label>
+                <textarea id="content" class="textarea" rows="4" placeholder="추가할 내용이있다면 적어주세요"></textarea>
+            </div>
+            <div class="flex justify-between">
+                <button type="button" class="button cancel-button">봐줄게요</button>
+                <button type="submit" class="button submit-button">신고하기!</button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        function handleSubmit(event) {
+            event.preventDefault();
+
+            const dateInput = document.getElementById('date');
+            const locationInput = document.getElementById('location');
+            const contentInput = document.getElementById('content');
+
+            const form = document.forms.namedItem('report');
+            form.elements.namedItem('date').value = dateInput.value;
+            form.elements.namedItem('location').value = locationInput.value;
+            form.elements.namedItem('content').value = contentInput.value;
+
+            form.submit();
+        }
+    </script>
+</body>
+</html>
